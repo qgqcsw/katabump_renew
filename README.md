@@ -191,3 +191,9 @@ node renew.js
 * `CLOUDFLARE_WORKER_SETUP.md`: Cloudflare Worker 定时触发配置指南。
 * `worker.js`: Cloudflare Worker 代码，用于定时触发 GitHub Actions。
 * `login.json`: (需手动创建) 存放本地运行的账号信息。
+
+---
+
+## 📚 参考项目
+
+- [XCQ0607/katabump](https://github.com/XCQ0607/katabump): 本项目参考了此仓库的实现思路和部分代码。
