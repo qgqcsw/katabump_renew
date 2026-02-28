@@ -62,14 +62,14 @@
 1. **创建 GitHub API Token**：
    - 登录 GitHub 账号
    - 进入 Settings → Developer settings → Personal access tokens → Fine-grained tokens
-   - 创建一个新的 token，名称为 `katabump-renewal-trigger`
+   - 创建一个新的 token，名称为 `katabump-renew-trigger`
    - 选择仓库访问权限，确保有 Actions: Read and write 权限
    - 保存生成的 token
 
 2. **配置 Cloudflare Worker**：
    - 登录 Cloudflare 控制台
    - 进入 Workers & Pages → Create Application → Create Worker
-   - 名称：`katabump-renewal-trigger`
+   - 名称：`katabump-renew-trigger`
    - 点击 "Deploy"
    - 进入 Worker 编辑页面，将 `worker.js` 文件的内容复制到代码编辑器中
    - 点击 "Save and Deploy"
