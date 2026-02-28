@@ -472,11 +472,11 @@ async function attemptTurnstileCdp(page) {
                 try {
                     const errorMsg = page.getByText('Incorrect password or no account');
                     if (await errorMsg.isVisible({ timeout: 3000 })) {
-                        console.error(`   >> ❌ 登录失败: 用户 ${user.username} 账号或密码错误`);
+                        console.error(`   >> ❌ KataBump登录失败: 用户 ${user.username} 账号或密码错误`);
                         const failShotPath = path.join(photoDir, `${safeUsername}.png`);
                         try { await page.screenshot({ path: failShotPath, fullPage: true }); } catch (e) { }
 
-                        await sendWeComMessage(`❌ *登录失败*\n用户: ${user.username}\n原因: 账号或密码错误`, failShotPath);
+                        await sendWeComMessage(`❌ *KataBump登录失败*\n用户: ${user.username}\n原因: 账号或密码错误`, failShotPath);
 
                         continue;
                     }
@@ -595,9 +595,35 @@ async function attemptTurnstileCdp(page) {
                                 const notTimeLoc = page.getByText("You can't renew your server yet");
                                 if (await notTimeLoc.isVisible()) {
                                     const text = await notTimeLoc.innerText();
-                                    const match = text.match(/as of\s+(.*?)\s+\(/);
-                                    let dateStr = match ? match[1] : 'Unknown Date';
-                                    console.log(`   >> ⏳ 暂无法续期。下次可用时间: ${dateStr}`);
+                                    const match = text.match(/as of\s+(.*?)\s+\(in (\d+) day\(s\)\)\./);
+                                    let dateStr = 'Unknown Date';
+                                    if (match) {
+                                        const englishDate = match[1];
+                                        const days = match[2];
+                                        
+                                        // 解析英文日期格式 (03 March)
+                                        const dateParts = englishDate.split(' ');
+                                        if (dateParts.length === 2) {
+                                            const day = dateParts[0].replace(/^0+/, ''); // 移除前导零
+                                            const monthMap = {
+                                                'January': '1',
+                                                'February': '2',
+                                                'March': '3',
+                                                'April': '4',
+                                                'May': '5',
+                                                'June': '6',
+                                                'July': '7',
+                                                'August': '8',
+                                                'September': '9',
+                                                'October': '10',
+                                                'November': '11',
+                                                'December': '12'
+                                            };
+                                            const month = monthMap[dateParts[1]] || '0';
+                                            dateStr = `${month}月${day}日（${days}天内）`;
+                                        }
+                                    }
+                                    console.log(`   >> ⏳ KataBump暂无法续期。下次续期时间: ${dateStr}`);
 
                                     // 截图证明
                                     const fs = require('fs');
@@ -608,7 +634,7 @@ async function attemptTurnstileCdp(page) {
                                     const skipShotPath = path.join(photoDir, `${safeUser}_skip.png`);
                                     try { await page.screenshot({ path: skipShotPath, fullPage: true }); } catch (e) { }
 
-                                    await sendWeComMessage(`⏳ *暂无法续期 (跳过)*\n用户: ${user.username}\n原因: 还没到时间\n下次可用: ${dateStr}`, skipShotPath);
+                                    await sendWeComMessage(`⏳ *KataBump暂无法续期 (跳过)*\n用户: ${user.username}\n原因: 未到续期时间\n下次续期时间: ${dateStr}`, skipShotPath);
 
                                     renewSuccess = true; // Mark as done to stop retries
                                     try {
@@ -644,7 +670,7 @@ async function attemptTurnstileCdp(page) {
                             const successShotPath = path.join(photoDir, `${safeUser}_success.png`);
                             try { await page.screenshot({ path: successShotPath, fullPage: true }); } catch (e) { }
 
-                            await sendWeComMessage(`✅ *续期成功*\n用户: ${user.username}\n状态: 服务器已成功续期！`, successShotPath);
+                            await sendWeComMessage(`✅ *KataBump续期成功*\n用户: ${user.username}\n状态: 服务器已成功续期！`, successShotPath);
                             renewSuccess = true;
                             break;
                         } else {
