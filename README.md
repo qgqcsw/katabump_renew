@@ -35,8 +35,8 @@
 6. **(可选) 企业微信消息推送**:
    如果你希望在续期成功、失败或跳过时收到企业微信通知（包含截图），请配置以下 Secret：
    - `WECOM_WEBHOOK_KEY`: 你的企业微信机器人 Webhook Key (从企业微信群机器人设置中获取)。
-   > 详细配置方法请参考 [WECOM_NOTIFICATION_CONFIG.md](WECOM_NOTIFICATION_CONFIG.md) 文件。
-   > 
+
+   > 详细配置方法请参考 [WECOM_NOTIFICATION_CONFIG.md](WECOM_NOTIFICATION_CONFIG.md) 文件。<br>
    > 如果未配置，脚本将跳过发送通知。
 
 ### 4. 运行结果与截图
