@@ -46,7 +46,7 @@ async function triggerGitHubAction(env) {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `token ${apiToken}`,
+        'Authorization': `Bearer ${apiToken}`,
         'Content-Type': 'application/json',
         'User-Agent': 'Cloudflare-Worker-Katabump-Renew',
         'Accept': 'application/vnd.github+json',
