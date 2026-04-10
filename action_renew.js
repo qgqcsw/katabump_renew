@@ -634,7 +634,7 @@ async function attemptTurnstileCdp(page) {
                                     const skipShotPath = path.join(photoDir, `${safeUser}_skip.png`);
                                     try { await page.screenshot({ path: skipShotPath, fullPage: true }); } catch (e) { }
 
-                                    await sendWeComMessage(`⏳ *KataBump暂无法续期 (跳过)*\n用户: ${user.username}\n原因: 未到续期时间\n下次续期时间: ${dateStr}`, skipShotPath);
+                                    // await sendWeComMessage(`⏳ *KataBump暂无法续期 (跳过)*\n用户: ${user.username}\n原因: 未到续期时间\n下次续期时间: ${dateStr}`, skipShotPath);
 
                                     renewSuccess = true; // Mark as done to stop retries
                                     try {
